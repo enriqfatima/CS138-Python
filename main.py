@@ -6,21 +6,27 @@ COLLABORATOR(S): name(s) of anyone who helped you
 """
 
 ##### FUNCTION DEFINITIONS #####
-def introduction():
-  '''introduction message of this particular program'''
-  print("Hello, this program will take in information about your paricular loan, rate, and term variables to then create a schedule for payments.\n")
-  rate = input("What is your monthly loan rate?: ")
-  priniple = input("What is your principle?: ")
-  return ''
-  
-  
+def create_schedule (loan, rate, term):
+  #specific formaitng for the output schedule
+  # ^ # of spaces 
+  output = str.format(f"{'Payment Number':^15}{'Payment':>10}{'':5}{'Interest':>13} {'':5}{'Principle':>13}{'':5}{'Balance':>13}\n")
 
-def create_schedule (principle, month_interest_rate, term):
-  '''This function calculates the monthly payment, interest payment each month, principle payment each month, and remaining balance after payment'''
-  num_payments = 12 * term
-  monthly_payment = principle * ((month_interest_rate*((1+month_interest_rate)**(num_payments)))/((1+month_interest_rate)**(num_payments)) - 1)
-  
+  n = term * 12
+  payment = loan * ((rate*((1+rate)**n))/(((1+rate)**n) -1))
+  balance = loan 
+
+  for i in range(1,(term*12) + 1): 
+    interest_payment = balance * rate 
+    principle_payment = payment - interest_payment
+    balance = balance - principle_payment  
+
+    output += str.format(f"{i:^15}(${payment:10,.2f}){'':5}(${interest_payment:10,.2f}){'':5}(${principle_payment:10,.2f}){'':5}${balance:10,.2f}\n")
+
+  return output
+
   
 ##### MAIN PROGRAM #####
-print(introduction())
+def main():
+  print(create_schedule(20000,(0.05/12), 2))
 
+main()
